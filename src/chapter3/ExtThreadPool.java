@@ -6,7 +6,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by 13 on 2017/5/5.
+ * @author gfy
  */
 public class ExtThreadPool {
 
@@ -30,16 +30,15 @@ public class ExtThreadPool {
     }
 
 
-    public static void main(String args[]) throws InterruptedException {
-        ExecutorService executorService = new ThreadPoolExecutor(5, 5, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<Runnable>()) {
+    public static void main(String[] args) throws InterruptedException {
+        ExecutorService executorService = new ThreadPoolExecutor(5, 5, 0L,
+                TimeUnit.MILLISECONDS, new LinkedBlockingDeque<Runnable>()) {
+            @Override
             protected void beforeExecute(Thread t, Runnable r) {
                 System.out.println("准备执行:" + ((MyTask) r).name);
             }
 
-            protected void afterExecute(Thread t, Runnable r) {
-                System.out.println("执行完成:" + ((MyTask) r).name);
-            }
-
+            @Override
             protected void terminated() {
                 System.out.println("线程池退出!");
             }
